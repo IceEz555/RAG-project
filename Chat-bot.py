@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_chat import message
+from agent_service import getAnswer
 # ตั้งค่า Streamlit page
 st.set_page_config(page_title="Task AI Chatbot", page_icon="🤖", layout="centered")
 # Custom CSS ให้ดู Modern เหมือนหน้าเว็บหลัก
@@ -43,7 +44,7 @@ with st.sidebar:
     st.divider()
     
     if st.button("ล้างประวัติการสนทนา", type="primary"):
-        st.session_state.messages = []
+        st.session_state["chat_history"] = []
         st.rerun()
 
 # Main Chat Interface
@@ -51,33 +52,30 @@ st.title("Task Assistant")
 st.markdown("ถามข้อมูลเกี่ยวกับ **Projects**, **Tasks**, หรือ **Team Members** ได้เลยครับ")
 
 if "chat_history" not in st.session_state:
-        st.session_state["chat_history"] = []
-        if "greeting_displayed" not in st.session_state:
-            st.session_state["greeting_displayed"] = False
+    st.session_state["chat_history"] = []
+if "greeting_displayed" not in st.session_state:
+    st.session_state["greeting_displayed"] = False
     
-    # Display chat history.
-        for chat in st.session_state["chat_history"]:
-            with st.chat_message(chat["role"]):
-                st.markdown(chat["content"])
+# Display chat history.
+for chat in st.session_state["chat_history"]:
+    with st.chat_message(chat["role"]):
+        st.markdown(chat["content"])
             
-        if not st.session_state["greeting_displayed"]:
-            with st.chat_message("assistant"):
-                st.markdown("Hi there! I am your Task Assistant. How can I help you today?")
-        st.session_state["greeting_displayed"] = True
+if not st.session_state["greeting_displayed"]:
+    with st.chat_message("assistant"):
+        st.markdown("Hi there! I am your Task Assistant. How can I help you today?")
+    st.session_state["greeting_displayed"] = True
 
+    # Accept user input.
 if prompt := st.chat_input("Say something"):
-        with st.chat_message("user"):
-            st.markdown(prompt)
-        
-        # Placeholder for bot response
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-            full_response = ""
-            
-            # Simulate streaming response
-            for chunk in ["กำลังประมวลผลคำตอบของคุณ..."]:
-                full_response += chunk
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
-
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    st.session_state["chat_history"].append({"role": "user", "content": prompt})
+    with st.chat_message("assistant"):
+        response_origi = getAnswer(query=prompt)
+        print("response_origi:", response_origi)
+        answer_origi = response_origi
+        answer_origi = 'Task Assistance : ' + answer_origi
+        st.markdown(answer_origi)
+        full_response = answer_origi
         st.session_state["chat_history"].append({"role": "assistant", "content": " "+full_response})
