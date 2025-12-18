@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_chat import message
-from RAG-Test.agent_service import getAnswer
+from agent_service import getAnswer
 # ตั้งค่า Streamlit page
 st.set_page_config(page_title="Task AI Chatbot", page_icon="🤖", layout="centered")
 # Custom CSS ให้ดู Modern เหมือนหน้าเว็บหลัก
