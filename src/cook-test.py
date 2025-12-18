@@ -1,4 +1,4 @@
-# from  import getAnswer
+from Agent import get_answer
 import streamlit as st
 from st_chat_message import message
 from st_on_hover_tabs import on_hover_tabs
@@ -23,40 +23,50 @@ with st.sidebar:
     tabs = on_hover_tabs(tabName=['Chat Bot', 'Money'],
                         iconName=['chat', 'money'], default_choice=0)
 
-# Chat Bot
+# -------------------------------------------------
+#  Chat Bot
+# -------------------------------------------------
 if tabs =='Chat Bot':
     st.title("AI Chef")
     st.write("You can chat with the AI here")
+
+     # Initialise session state
     if "chat_history" not in st.session_state:
         st.session_state["chat_history"] = []
     if "greeting_displayed" not in st.session_state:
         st.session_state["greeting_displayed"] = False
 
-    # Display chat history
-    for chat in st.session_state["chat_history"]:
-        with message(chat["role"]):
-            st.markdown(chat["content"])
-    # Display greeting message
+
+    # Display chat history with unique keys
+    for i, chat in enumerate(st.session_state["chat_history"]):
+        message(chat["content"], is_user=(chat["role"] == "user"), key=f"chat_msg_{i}")
+    
+    # Display greeting message (persisted)
     if not st.session_state["greeting_displayed"]:
+        # Show greeting bubble
         message("Hi there! I'm your AI chef assistant. How can I help you today?")
+        # Keep greeting in chat history so it stays visible
+        st.session_state["chat_history"].append({"role": "assistant", "content": "Hi there! I'm your AI chef assistant. How can I help you today?"})
         st.session_state["greeting_displayed"] = True
 
-    # Get user input
-    if user_input := st.chat_input("Say somthing"):     
-        with message("user"):
-            st.markdown(user_input)
+    # -------------------------------------------------
+    #  รับข้อความจากผู้ใช้
+    # -------------------------------------------------
+    if user_input := st.chat_input("Say something"):
+        # show user input
+        message(user_input, is_user=True)
         st.session_state["chat_history"].append({"role": "user", "content": user_input})
-
+        
         # Generate AI response
-        # with message("assistant"):
-        #     response_origi = getAnswer(query=user_input)
-        #     print("Response_origi: ", response_origi)
-        #     answer_origi = response_origi
-        #     awnser_origi = "Original answer: " + answer_origi
-        #     st.markdown(awnser_origi)
+        response = get_answer(query=user_input)
+
+        # show AI response
+        message(response, is_user=False, key="ai_response")
+        st.session_state["chat_history"].append(
+            {"role": "assistant", "content": response}
+        )
 
 
 elif tabs == 'Money':
     st.title("Paper")
     st.write('Name of option is {}'.format(tabs))
-
