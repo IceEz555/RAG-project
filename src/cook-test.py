@@ -1,4 +1,4 @@
-from Agent import get_answer
+from main_logic import get_answer
 import streamlit as st
 from st_chat_message import message
 from st_on_hover_tabs import on_hover_tabs
