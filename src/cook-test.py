@@ -22,6 +22,8 @@ st.markdown("""
 with st.sidebar:
     tabs = on_hover_tabs(tabName=['Chat Bot', 'Money'],
                         iconName=['chat', 'money'], default_choice=0)
+    
+    show_sources = st.toggle("Show Retrieved Sources", value=False)
 
 # -------------------------------------------------
 #  Chat Bot
@@ -58,13 +60,30 @@ if tabs =='Chat Bot':
         st.session_state["chat_history"].append({"role": "user", "content": user_input})
         
         # Generate AI response
-        response = get_answer(query=user_input)
+        response, sources = get_answer(query=user_input)
 
         # show AI response
         message(response, is_user=False, key="ai_response")
         st.session_state["chat_history"].append(
             {"role": "assistant", "content": response}
         )
+
+        # Show Retrieved Context (Debug)
+        if sources and show_sources:
+            with st.expander("🔍 Retrieved Context (Sources)"):
+                for i, source in enumerate(sources):
+                    st.markdown(f"##### Retrive_content {i+1}")
+                    
+                    # Check if source is a Document object (has 'page_content' and 'metadata')
+                    if hasattr(source, 'page_content') and hasattr(source, 'metadata'):
+                        st.markdown("**Source:**")
+                        st.json(source.metadata)
+                        st.markdown("**Content:**")
+                        st.text(source.page_content)
+                    else:
+                        # Fallback for string content
+                        st.text(source)
+                    st.divider()
 
 
 elif tabs == 'Money':
