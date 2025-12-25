@@ -137,10 +137,20 @@ def route_question(query: str):
 # --------------------------------------------------------------------
 # 4. COOKING AGENT (EXISTING RAG AGENT)
 # --------------------------------------------------------------------
+from scraper import scrape_recipe
+
+@tool
+def scrape_recipe_tool(url: str):
+    """
+    Fetch and parse a recipe from a given URL. 
+    Use this when the user provides a link to a recipe or asks to read a recipe from a specific website.
+    """
+    return scrape_recipe(url)
+
 # Rename 'agent' to 'cooking_agent' for clarity
 cooking_agent = create_agent(
     model,
-    tools=[retrive_context],
+    tools=[retrive_context, scrape_recipe_tool],
     system_prompt=system_prompt,
     middleware=[
         SummarizationMiddleware(

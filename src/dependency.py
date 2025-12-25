@@ -14,7 +14,7 @@ from langchain_core.messages import ToolMessage
 from pydantic import BaseModel, Field
 
 # Load environment variables
-load_dotenv() 
+load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 os.environ["GOOGLE_API_KEY"] = api_key
 
@@ -23,7 +23,7 @@ model = init_chat_model("google_genai:gemini-2.5-flash-lite")
 general_model = init_chat_model("google_genai:gemini-2.5-flash-lite")
 
 # Initialize embeddings and vector store
-embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 
 # Load existing vector store
 # Note: Assuming relative path consistency relative to execution or use absolute path

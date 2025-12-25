@@ -1,69 +1,104 @@
-# 👨‍🍳 AI Cooking Assistant (RAG Project)
+# 👨‍🍳 AI Cooking Assistant & Magic Fridge 📸
 
-An intelligent cooking assistant powered by Google Gemini and Retrieval-Augmented Generation (RAG). This application can help you with cooking recipes, methods, and general kitchen tips, while maintaining a separate conversational context for general chit-chat.
+Welcome to the **AI Cooking Assistant**! This project combines **GenAI (Gemini)**, **RAG (Retrieval-Augmented Generation)**, and **Computer Vision (Hugging Face)** to create a smart kitchen companion. It can chat about recipes, answer cooking questions from a knowledge base, and even analyze photos of your fridge to suggest menus!
 
-## ✨ Features
+---
 
-- **Dual Agent System**:
-    - **Cooking Agent**: Specialized in food and cooking queries, equipped with RAG knowledge base.
-    - **General Agent**: Handles greetings and general conversation.
-- **Smart Routing**: automatically routes user queries to the appropriate agent based on context.
-- **Separate Memory Streams**: Uses distinct memory checkpoints for each agent, allowing disjoint conversations (Cooking vs. General) to coexist under the same user session.
-- **RAG Capability**: Retrieves relevant documents from a local Vector Store to provide accurate cooking information.
-- **Interactive UI**: Built with Streamlit for a chat-like experience.
+## ✨ Key Features
 
-## 📂 Project Structure
+1.  **🤖 Intelligent Chatbot (Dual Agent System)**
+    *   **Cooking Agent**: An expert chef powered by RAG. It retrieves information from a custom knowledge base (Vector Store) to give accurate recipe advice.
+    *   **General Agent**: A friendly assistant for greetings and chit-chat.
+    *   **Smart Routing**: The system automatically detects your intent and switches between agents seamlessly.
 
-The source code has been modularized for better maintainability:
+2.  **📸 Magic Fridge (Image Recognition)**
+    *   Upload a photo of your refrigerator or ingredients.
+    *   The system uses **Local AI (Hugging Face Transformers)** to identify food items (e.g., "eggs, milk, carrots").
+    *   It then automatically prompts the Cooking Agent to suggest recipes based on those ingredients!
 
-```text
-src/
-├── main_logic.py   # Core logic: Agent creation, Routing, and Execution flow (get_answer)
-├── dependency.py   # Setup: Model initialization, Tools, Middleware, and Helpers
-├── variables.py    # Configuration: System prompts and constants
-├── cook-test.py    # Frontend: Streamlit user interface
-└── style.css       # Styling: Custom CSS for the frontend
+3.  **🧠 Memory & Context**
+    *   Remembers your conversation history using separated memory streams for general chat and cooking tasks.
+
+---
+
+## 🛠️ Prerequisites
+
+Before you begin, make sure you have:
+*   **Python 3.9+** installed.
+*   **Google API Key** (for Gemini Models).
+*   *(Optional)* **NVIDIA GPU** with CUDA support (for faster local image analysis).
+
+---
+
+## 🚀 Installation Guide
+
+### 1. Clone the Repository
+```bash
+git clone <repository_url>
+cd RAG-project
 ```
 
-## 🚀 Getting Started
+### 2. Install Dependencies
+Run the following command to install all required libraries:
+```bash
+pip install streamlit langchain langchain-google-genai langgraph python-dotenv
+pip install transformers torch pillow sentencepiece protobuf
+```
+*> Note: If you want to use GPU, make sure to install the correct version of PyTorch from [pytorch.org](https://pytorch.org/get-started/locally/).*
 
-### Prerequisites
+### 3. Setup Configuration
+Create a `.env` file in the root directory (or rename `.env.example` -> `.env`) and add your keys:
+```env
+GOOGLE_API_KEY=your_google_api_key_here
+HF_TOKEN=your_huggingface_token_here (optional, for some gated models)
+```
 
-- Python 3.8+
-- Google API Key (GEMINI)
+---
 
-### Installation
+## 🎮 How to Run
 
-1.  Clone the repository.
-2.  Install dependencies:
-    ```bash
-    pip install langchain langchain-google-genai langgraph streamlit python-dotenv
-    ```
-3.  Create a `.env` file in the root directory and add your API key:
-    ```env
-    GOOGLE_API_KEY=your_api_key_here
-    ```
-
-### Usage
-
-Run the web application:
-
+Start the web application using Streamlit:
 ```bash
 streamlit run src/cook-test.py
 ```
+This will open the app in your default web browser (usually at `http://localhost:8501`).
 
-## 🧠 How it Works
+---
 
-1.  **Input**: User types a message in the chat interface.
-2.  **Guardrails**: The system checks for unsafe content.
-3.  **Routing**: The `RouteQuery` model decides if the question is "General" or "Cooking".
-4.  **Execution**:
-    - If **General**: The General Agent (Stateful) responds.
-    - If **Cooking**: The Cooking Agent (Stateful + RAG) retrieves documents and responds.
-5.  **Memory**: The system uses `thread_id="1"` but accesses different `InMemorySaver` instances depending on the active agent, ensuring context isolation.
+## 📁 Project Structure
 
-## 🛠️ Customization
+```text
+RAG-project/
+├── data/                   # Raw text data for the knowledge base
+├── src/                    # Source code
+│   ├── cook-test.py        # 🖥️ Main Frontend (Streamlit)
+│   ├── magic_fridge.py     # 📸 Image Analysis UI Module
+│   ├── hf_integrations.py  # 🖼️ Computer Vision Logic (Hugging Face)
+│   ├── main_logic.py       # 🧠 AI Brain (Agents, Routing, Safety)
+│   ├── dependency.py       # ⚙️ Configuration & Tools (Vectors, Middleware)
+│   └── variables.py        # 📝 Prompts & Constants
+├── Vector_Store_RAG/       # 🗄️ Database (Embeddings)
+└── SYSTEM_ARCHITECTURE.md  # 🏗️ Technical Documentation
+```
 
-- **Prompts**: Edit `src/variables.py` to change system behaviors.
-- **Tools**: Add new tools in `src/dependency.py`.
-- **Logic**: Modify routing or agent config in `src/main_logic.py`.
+---
+
+## 🧩 Troubleshooting
+
+**1. Image Analysis is slow?**
+*   The system runs the Vision model **locally** on your machine.
+*   If you have a GPU, ensure CUDA is enabled.
+*   On CPU, it might take a few seconds to process.
+
+**2. "Model not found" or Download errors?**
+*   The first time you run "Magic Fridge", it will download model weights (~3GB). Please be patient.
+*   Check your internet connection.
+
+**3. Vector Store Error?**
+*   If the bot says "No knowledge base available", you might need to rebuild the vector store.
+*   Make sure the `Vector_Store_RAG` directory exists and contains data.
+
+---
+
+## 📄 License
+This project is for educational purposes.

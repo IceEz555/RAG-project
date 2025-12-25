@@ -1,7 +1,11 @@
-from main_logic import get_answer
-import streamlit as st
 from st_chat_message import message
+# from st_on_hover_tabs import on_hover_tabs # Removed custom tabs
+from main_logic import get_answer
+from magic_fridge import show_magic_fridge
+import io
+import streamlit as st
 from st_on_hover_tabs import on_hover_tabs
+import io
 from st_on_hover_tabs import on_hover_tabs
 import streamlit as st
 
@@ -20,10 +24,21 @@ st.markdown("""
 
 # Sidebar
 with st.sidebar:
-    tabs = on_hover_tabs(tabName=['Chat Bot', 'Money'],
-                        iconName=['chat', 'money'], default_choice=0)
+    tabs = on_hover_tabs(tabName=['Chat Bot', 'Recipe Search', 'Magic Fridge'],
+                        iconName=['chat', 'search', 'camera'], default_choice=0)
     
-    show_sources = st.toggle("Show Retrieved Sources", value=False)
+    st.divider()
+    
+    show_sources = st.toggle("Sources", value=False)
+    
+    st.divider()
+    if st.button("🗑️", help="Clear Chat"):
+        st.session_state["chat_history"] = []
+        st.session_state["greeting_displayed"] = False
+        st.rerun()
+
+# Logic is already using 'tabs' variable, so no mapping needed.
+
 
 # -------------------------------------------------
 #  Chat Bot
@@ -68,7 +83,6 @@ if tabs =='Chat Bot':
             {"role": "assistant", "content": response}
         )
 
-        # Show Retrieved Context (Debug)
         if sources and show_sources:
             with st.expander("🔍 Retrieved Context (Sources)"):
                 for i, source in enumerate(sources):
@@ -85,7 +99,58 @@ if tabs =='Chat Bot':
                         st.text(source)
                     st.divider()
 
+    # Handle Auto-Trigger from Image Upload
+    if "trigger_agent" in st.session_state:
+        user_input = st.session_state.pop("trigger_agent")
+        # We don't need to append to history again as it was done in the button callback
+        # But we need to call logic
+        response, sources = get_answer(query=user_input)
+        
+        message(response, is_user=False, key="ai_response_auto")
+        st.session_state["chat_history"].append(
+            {"role": "assistant", "content": response}
+        )
+        st.rerun()
 
-elif tabs == 'Money':
-    st.title("Paper")
-    st.write('Name of option is {}'.format(tabs))
+
+elif tabs == 'Recipe Search':
+    st.title("🍳 Recipe Search & Import")
+    st.write("Found a cool recipe online? Paste the link here to let me read it!")
+    
+    recipe_url = st.text_input("Paste Recipe URL (e.g., from AllRecipes, FoodNetwork)")
+    
+    col1, col2 = st.columns([3, 1])
+    with col2:
+        st.write("")
+        st.write("")
+        read_btn = st.button("Read Recipe", type="primary")
+    
+    if read_btn:
+        if recipe_url:
+            with st.spinner("Reading recipe..."):
+                from scraper import scrape_recipe
+                result = scrape_recipe(recipe_url)
+                
+                if "Error" in result:
+                    st.error(result)
+                else:
+                    st.success("Done!")
+                    with st.expander("View Recipe Content", expanded=True):
+                        st.markdown(result)
+                    
+                    if st.button("Save to Chat Context"):
+                        st.session_state["chat_history"].append({"role": "user", "content": f"I found this recipe: {result}"})
+                        st.session_state["chat_history"].append({"role": "assistant", "content": "Got it! I've memorized this recipe. Ask me anything about it."})
+                        st.success("Saved! Switch to 'Chat Bot' to discuss it.")
+        else:
+            st.warning("Please enter a URL.")
+
+elif tabs == 'Magic Fridge':
+    show_magic_fridge()
+    
+    # Auto-switch if triggered
+    if "trigger_agent" in st.session_state:
+        # Optional: Force switch tab visually? 
+        # Streamlit re-run might reset standard widgets unless controlled. 
+        # But user can manually click 'Chat Bot' after seeing the success message.
+        pass
