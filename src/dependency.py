@@ -12,6 +12,7 @@ from langchain_core.runnables import RunnableConfig
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain_core.messages import ToolMessage
 from pydantic import BaseModel, Field
+from token_counter import TokenCounter
 
 # Load environment variables
 load_dotenv()
@@ -55,18 +56,30 @@ def general_tool(query: str):
 # HELPER FUNCTIONS & MIDDLEWARE
 # --------------------------------------------------------------------
 class SimpleLoggingMiddleware:
-    """Middleware to log input and output to console for debugging."""
-    def __init__(self):
-        pass
+    """Middleware to log input and output to console for debugging with token counting."""
+    def __init__(self, token_counter=None):
+        self.token_counter = token_counter
 
     def on_request(self, inputs):
         if "messages" in inputs and inputs["messages"]:
-            print(f"[{time.strftime('%X')}] 📥 User Input: {inputs['messages'][-1].content}")
+            user_input = inputs['messages'][-1].content
+            print(f"[{time.strftime('%X')}] 📥 User Input: {user_input}")
+            
+            if self.token_counter:
+                input_tokens = self.token_counter.add_input(user_input)
+                print(f"[{time.strftime('%X')}] 🔢 Input Tokens: {input_tokens}")
         return inputs
 
     def on_response(self, outputs):
         if "messages" in outputs and outputs["messages"]:
-            print(f"[{time.strftime('%X')}] 📤 Agent Output: {outputs['messages'][-1].content[:100]}...")
+            agent_output = outputs['messages'][-1].content
+            print(f"[{time.strftime('%X')}] 📤 Agent Output: {agent_output[:100]}...")
+            
+            if self.token_counter:
+                output_tokens = self.token_counter.add_output(agent_output)
+                print(f"[{time.strftime('%X')}] 🔢 Output Tokens: {output_tokens}")
+                stats = self.token_counter.get_stats()
+                print(f"[{time.strftime('%X')}] 📊 Total Session: {stats['total_tokens']} tokens (Input: {stats['input_tokens']}, Output: {stats['output_tokens']})")
         return outputs
 
 def safety_check(text: str) -> bool:

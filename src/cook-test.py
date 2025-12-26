@@ -1,6 +1,6 @@
 from st_chat_message import message
 # from st_on_hover_tabs import on_hover_tabs # Removed custom tabs
-from main_logic import get_answer
+from main_logic import get_answer, reset_token_counter
 from magic_fridge import show_magic_fridge
 import io
 import streamlit as st
@@ -32,9 +32,29 @@ with st.sidebar:
     show_sources = st.toggle("Sources", value=False)
     
     st.divider()
+    
+    # Token Usage Display
+    if "token_stats" in st.session_state:
+        stats = st.session_state["token_stats"]
+        st.markdown(f"### 🔢 Token Usage")
+        st.caption(f"Model: {stats.get('model', 'N/A')}")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Input", f"{stats['input_tokens']:,}")
+            st.metric("Output", f"{stats['output_tokens']:,}")
+        with col2:
+            st.metric("Total", f"{stats['total_tokens']:,}", 
+                     delta=f"{stats['session_count']} msgs")
+
+    
+    st.divider()
     if st.button("🗑️", help="Clear Chat"):
         st.session_state["chat_history"] = []
         st.session_state["greeting_displayed"] = False
+        if "token_stats" in st.session_state:
+            del st.session_state["token_stats"]
+        reset_token_counter()  # Reset the global token counter
         st.rerun()
 
 # Logic is already using 'tabs' variable, so no mapping needed.
@@ -75,7 +95,10 @@ if tabs =='Chat Bot':
         st.session_state["chat_history"].append({"role": "user", "content": user_input})
         
         # Generate AI response
-        response, sources = get_answer(query=user_input)
+        response, sources, token_stats = get_answer(query=user_input)
+        
+        # Update token stats in session state
+        st.session_state["token_stats"] = token_stats
 
         # show AI response
         message(response, is_user=False, key="ai_response")
@@ -104,7 +127,10 @@ if tabs =='Chat Bot':
         user_input = st.session_state.pop("trigger_agent")
         # We don't need to append to history again as it was done in the button callback
         # But we need to call logic
-        response, sources = get_answer(query=user_input)
+        response, sources, token_stats = get_answer(query=user_input)
+        
+        # Update token stats
+        st.session_state["token_stats"] = token_stats
         
         message(response, is_user=False, key="ai_response_auto")
         st.session_state["chat_history"].append(

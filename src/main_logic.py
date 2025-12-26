@@ -15,7 +15,8 @@ from dependency import (
     InMemorySaver,
     ToolMessage,
     BaseModel,
-    Field
+    Field,
+    TokenCounter
 )
 
 # --------------------------------------------------------------------
@@ -69,10 +70,22 @@ cooking_agent = create_agent(
 # --------------------------------------------------------------------
 # MAIN EXECUTION FUNCTION
 # --------------------------------------------------------------------
-logger = SimpleLoggingMiddleware()
+# Create global token counter instance
+token_counter = TokenCounter()
+logger = SimpleLoggingMiddleware(token_counter=token_counter)
 
-def get_answer(query: str, thread_id: str = "1") -> any:
-    """Get final answer from the agent with Routing and Middleware."""
+def reset_token_counter():
+    """Reset the global token counter."""
+    global token_counter
+    token_counter.reset()
+    print("🔄 Token counter reset")
+
+def get_answer(query: str, thread_id: str = "1"):
+    """Get final answer from the agent with Routing and Middleware.
+    
+    Returns:
+        tuple: (response_text, clean_sources, token_stats)
+    """
     
     # 1. Logging Input
     logger.on_request({"messages": [type('obj', (object,), {'content': query})]}) 
@@ -128,5 +141,8 @@ def get_answer(query: str, thread_id: str = "1") -> any:
 
     # 5. Logging Output
     logger.on_response({"messages": [type('obj', (object,), {'content': response_text})]})
+    
+    # 6. Get token statistics
+    token_stats = token_counter.get_stats()
 
-    return response_text, clean_sources
+    return response_text, clean_sources, token_stats
