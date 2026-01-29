@@ -1,36 +1,305 @@
 ﻿Author,Comment Text
-@ShawhinTalebi,🤝 Work with me: https://www.shawhintalebi.com
-@mamun001,Thank you!
-@karannahar8125,"Interesting. However when considering embedding dimensions as 12 and 24,  what is the logic behind that?  Is it not giving 2x weightage for responses in K means as it as a distance based metric and for response we are giving it 24 dimensions as compared to 12 dimensions on title??"
-@-hedredo8420,"Hey Shaw, thanks for this great vidéo, gave me some good ideas. However, don't you think that joining both embeddings features as a single matrix of vectors for KMeans add some bias to the segmentation due to the categorical nature of job title ? We can see in the clusters analysis prompt that each segment is mainly attached to a particular job. It could have been interesting to cluster each feature appart and try to make an ari score between each set of clusters."
-@tyrealq,"Great content—very hands-on! Thank you so much for sharing.
-
-I have a few questions regarding embedding models and would appreciate your insights:
-
-1. I assume you opted for a 12 + 24 dimensional embedding instead of the new default 1500+ dimensions for efficiency and illustration purposes. In practice, what would you recommend for embedding parameters? Given that higher dimensionality doesn’t always translate to better accuracy/representation, how do you determine the optimal number of dimensions?
-
-2. Relatedly, I’m using pre-trained transformer-based embedding models to quantify customer feedback (contextual perceptions). Since these models are pre-trained, their accuracy heavily depends on the training data. Given that perceptions are inherently subjective, I often encounter significant deviations between the model’s quantifications and human evaluations. How would you suggest addressing subjectivity and training bias when applying embeddings in such scenarios?
-
-Once again, thank you for the excellent content!"
-@Aldous373,"I’m a market research analyst looking for a data science major so i’m actually very interested in this. 
-
-Here are some questions:
-- Since join reason has more dimensions than job title, is the model biased to cluster from join reason because is giving it more dimensions?
-- Concatenating both vectors lose the relationship of the dimensions within a vector? Is it valid to cluster by separate features and then cluster them again?
-
-
-Thanks for your response"
-@geekyprogrammer4831,Going to create a medium article on it 😊
-@ShawhinTalebi,"My thinking was less information is needed to describe the variation of job titles vs people's join reasons. The weighting was something I considered, but couldn't come up with a conclusive answer if it was actually an issue."
-@karannahar8125, @ShawhinTalebi   How about combining both strings and then doing the embedding ?
-@ShawhinTalebi,"Interesting question! In principle the embeddings convey the semantic meaning of various job titles in a continuous space so I don't see them as categorical. From a business perspective, I'd say, we want there to be a bias for job titles because this is something we can use for customer profiling and future out reach."
-@ShawhinTalebi,"Great questions! Here are some thoughts.
-
-1. For one, my dataset size is quite small here, so 1500 embedding dims would cause some issues with KMeans. Here I experimented with a few different choices, but the intuition I used was since dream outcomes will contain more information than job titles, more dimensions will be required for it.
-
-2. One thing you could try is fine-tuning the embeddings on positive/negative pairs. This will hopefully result in a model better tailored for your use case. I talk more about that here: https://youtu.be/hOLBrIjRAj4"
-@tyrealq, @ShawhinTalebi  Thank you for the response! I will definitely check out the video!
-@ShawhinTalebi,"Great questions! Here are some thoughts.
-1. This was something I ran into when doing this analysis. My sense is that this will be an issue if the dimensionality of one features set is MUCH bigger than another. While the ones I chose here didn't seem to have that issue (as seen in the consistency of roles in the final clusters), the same may not be true for a different dataset.
-2. Good call out. Since I used the same embedding model which is (supposedly) compatible across different embedding dim choices I think I can get away with it here. One thing that would have been better is to normalize the vectors after concatenation."
-@Aldous373,@ Thanks for your response ❤️
+@MrBeast,"Stop scrolling and watch the video! You want to see the $1,000,000 a night hotel at the end haha"
+@CharlieBella321,"Bro really went from counting to 100,000 in his room to buying the entire hotel industry. The greatest character arc on YouTube.MrBeast 😊"
+@쌍딸-z8i,저도 초대해줘요
+@mohsinmahi8111,mr beast pleace help🖐
+@Sudhirbas-b7d,Mrbeast kya mera naam main aapko pata hai mera naam Ajit hai aur Maine ek bar aapko video mein comment kiya tha ki aap 2026 ka video banae rakhna ab tak abhi bhi 2026 ka video nahin banaa
+@Subhamnayknayk,Nice ❤
+@arturowurth4723,10.000 dolar maldives hotel was defenitly the best one
+@Khanazaz22Khanazaz22,Anyone in 2026 ❤😂🎉??
+@RumaAkter-b6g8j,MrBeast ❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤
+@kevinflores2722,Super épico 😎
+@Євгенійзапольський,Yegor
+@Євгенійзапольський,Egorik
+@V.THARSHAN,உங்க video நல்லாருக்கும் Beast😊😊
+@V.THARSHAN,Hi bro நான் இந்தியா வில் இருக்கேன்
+@Zepoidyt,wo
+@NazmulIslam3535-w5z,Nice 🇧🇩 Dhaka Bangladesh 🇧🇩
+@NazmulIslam3535-w5z,Dhaka Bangladesh 🇧🇩
+@Philistine11,❤❤
+@razvanhanu8821,Ssofia
+@DenisseHuerta-v4l,"11:10 Poor Nolan, he won't have any more children."
+@lagzz_0,42nd
+@JayseGracia-w5y6y,​ @lagzz_0 63
+@Crispybenoit,How do you never run out of ideas Jimmyyyyyy. It's incredible!
+@1jertix,yaa
+@luvlymari153,Yess
+@footballrepublix1,Ur amazing
+@hey.pratham,J
+@aspect_productions,I know
+@WarRobotDoge,Hi cowuh
+@stanlij158,lol
+@ActualSparkYT,HI
+@Illuminex_XD,Hi Mr. Beast
+@ابوالنور-ض4ض,😊minex_XD
+@WarRobotDoge,Yes
+@myrougeyoshi,Rue
+@1TAG1,Mrbeast
+@Ilikemyownvids,Hello
+@NegetiveRizz,ok
+@nootbaaronreal,Yea
+@RetOffical,Hi i saw u at Nj
+@joelmohan781,ok
+@lonelygorilla9751,Siuuuuuuuuuuuuuu
+@bobbymcentaggart8140,Hi
+@starchild844,Indeed I do thanks for always putting out amazing videos I've been waiting for this
+@LouisallNiches,Mehnn that’s crazy! Fireworks should double up!! Because 😅😅
+@yoheiAnimations,❤
+@JustJory,okay
+@papuaze,Ok
+@K4tes,Here before this blows up
+@Bluvols,Hi
+@sammy9257,Love you guys you guys are awsome
+@RedCCWLN,Ok
+@Oiiink,fr
+@RedCCWLN,No
+@randomperson869,mo
+@shannonarmstrong6364,"Yes 🙌🏿 thanks sooo very very much 
+Blessings blessings blessings all"
+@Voliceeno,I have colitis and you have crones. We couldn’t be more alike!!!!
+@pizza_11,sup
+@angelvega4840,I’ll take a small loan of 500 k please
+@J-ÂXX,Oki
+@asper5340,Here before 499 comments
+@mountainmemers7411,Yeheyeheheheyeheyeheheheyeheh
+@mineryhb6310,how did the hotel taste
+@super6703,Yo I'm kind of early
+@sparahofficial103,true
+@declanharper3539,Hola
+@CoolDuck82,Hello beast mr your burgers are bussin bussin
+@AmraAkram,YES obviously
+@MexicanPeewee69,Hi
+@CyrusShameliOfficial,Yooo
+@bthag5535,Hi jimmy
+@awaken240,I love you Mr. Beast :)
+@Fire_Flys_666,I liked it first
+@metalpipe380,Hi beast
+@bojackboys,look at all of the people trying to get noticed by mrbeast
+@userkkkkkkkkkkk,Ok I will
+@timtice247,Ok lol
+@VreytaIl,Among us
+@ransebaez2420,✌️🔥💯
+@skyrocketingflash5138,i love you man
+@KadCar1234,Omg
+@GamerRanger10,yessir
+@parkermcwhorter1989,The million dollar hotel is cool
+@rloxz7045,lol
+@darthtyranus9743,Hi
+@minemanclub,Mister Beast wow
+@zSuperPlayz,HOW DID YOU KNOW??
+@xactlee,Sure
+@yosr4you,Relaxation 4 you
+@Rawr83838,Bro
+@pieiieggg,ma
+@jessicalaughren4997,Hi
+@blackthing1483,HI
+@elle_lawliet,Jimmy can you made a collab with JDaniel Please???
+@OddBrotherz4,I’m almost done watching this vid it’s amazing
+@mush_shr00msgay65,Hola
+@isabellawalker8538,ur a goat
+@digbogrust,No😮
+@mr.wholesome,bingus
+@Ilovesoccer789,Hi
+@bilalabbasi_7,Ok
+@auren2453,Hi
+@seud2045,Hy
+@augustzyz,True
+@KyleJSNY,ok :c
+@TimTam_3,Fine. I guess I’ll watch till the end cause you said so Jimmy
+@schalkedits,Moin
+@theisbetterthenu1849,"Haha ok! Its my first time responding to you and i wanna say, i love your videos so much!"
+@buzy4640,ONE OF THE FIRST COMMENTS!
+@BV20,W MrBeast
+@BushCampImperfectCell,Buy Chicago 🗿
+@DecxdedWT,Keep it up your doing so well!
+@top10-d6t,Yeas
+@egger2582,Bet
+@Ivaansayh1,How you know 😢
+@x4_vy,fax
+@Meyer_Bns,Hello
+@Pranks.,Me beast is the beast 😊
+@Qouh,hi
+@madd00009,mrgoat
+@kyleandow4844,A million dollars a night is just wild !
+@WAyZuFaSt,yessir!
+@Just_chillin2675,No
+@rubyounex7543,You take money and don't give followers
+@hAckman011,your so great
+@darshitpatel2780,"I need 2,000,00 Indian rupees"
+@austinrobinson7338,You should rent Liechtenstein for a night next
+@Ryyyyyyyyyyyyyyyyyyyyy,"Don't translate😡
+คุณโดนด่าเพราะถูกแปล ถ้าไม่หักคำสาป ตาย ทางเดียวที่จะแหกคำสาปได้ คือ สมัครสมาชิกช่องผม ลงทะเบียนเลย!!!"
+@sofi_rosario9158,Hola
+@franciscogregorio4816,🤑
+@prestynplastino,I love you Mr best
+@هيثمبركات-غ8ح,😂🎉😂😂😂
+@خليف-ه6ق,Yg
+@pro_speed-nn4fs,UR VIDS ARE AWSOME!!! KEEP UP THE GOOD CONTENT
+@Ksssassssss,😮holanolo😊
+@TTOPIce,e
+@Hey5t4rt,WHy bot?!
+@SergioAgra-wg3hf,1DFRHRJTRJ😍😍😍😍🥰🥰
+@yoldashyoldashov1534,"Benim hesapta görmek 
+Isterdim!!!"
+@YTdikdikcabe,The best YouTuber
+@JNGamer-bi6ro,Help me please 😢😢😢😢
+@SahajadBm-oh1ul,2:19
+@kapeikka_,"Please let him notice!!!!Please tell melstroi he gave the task if Mr. Beiste sends him greetings, he will pay 37 million rubles to the one who told him this.все"
+@MuhammadRafique-v4n,222
+@HawanatuKabia-zg7xj,Mr Beast please😢 give me money 🥺🥺🥺🥺
+@AngelVillarroel-s7q,Ola❤❤❤❤❤🎉
+@xcriismc1026, @AngelVillarroel-s7q  habla en ilngles mr beast no español
+@Diranrajdani,"Diran rajdani🤠
+Negara indonesia"
+@safawasfi4078,Hyde
+@Anaclara-x5y,Oi mrbeast❤
+@_tk_9,Next time challenge try siachen glacier the higgest battleground on whole earth.
+@AhmedShail-x7u,K
+@JasonAddison-f9u,Im Subscribed
+@NainaJha-g4g,Cft❤
+@NasserAchatan-z8c,❤❤
+@shortgaming99,Hello
+@Quantum1ty,poggers
+@hey.pratham,H
+@Stendofer3kj,​ @hey.pratham i
+@ابوالنور-ض4ض,ناوي ناوي❤ العاب كرتون
+@WarRobotDoge,Subscribe
+@Pelinka_DO_SMTH,man ur insane
+@Tommo3756,Q
+@Braydennnnnnnnnnn,U r amazing
+@Kestisy,Ok
+@mason18q,hi mrbeast
+@TheWildCardShow,😂
+@omaralbik2652,I love u
+@elizabethrosemohammed9430,Hii
+@yourmajesty010,Yo
+@Hendogsolos,Ok
+@keiperez5135,In the Dominican Republic we love you ❤️🇩🇴
+@NeedForSpeedRTX,yes
+@Zonoton,ok
+@YoshiRyder,A
+@ItsSalvatore,hi beast
+@tormented_skops,Wat 44 seconds ago :000
+@MetxsightseerRailfan,hi
+@eleni_draws,Ok
+@kipcraft9,First
+@lmaosomerandomguy,No.
+@TIBI..,Love u
+@ghaithkimnik7711,كيف حالك يا جيمي
+@zoe11_,nevermind!! :)
+@thedripking,W
+@yosr4you,Beast
+@chiji2118,🎉😂🎉
+@itsazinmyz5729,I love you mr best❤️❤️
+@aremandoo,Hi
+@dogwithahat609,no
+@blueridgeocean,10.4 boss
+@Pam234,No sir
+@KeeganPVP,ok
+@anthonyaguilar3639,Mr.Beast eres mi idolo bro :D
+@RatioOnYT,Ok
+@Bric_workshop,Got me lol
+@aremandoo,No way
+@duckwitbuckethat5931,Hey mister beast
+@buddyboy2690,Yes
+@Cha12lieBat,Hello
+@eran8593,Okay ❤
+@Rip_LegendPele,:)
+@cforciann,pp
+@Escador1,"Yes. (Btw, epic content) :)"
+@carvtheduck,ok
+@theabsolutegoat1,ok
+@BushCampImperfectCell,Huh
+@ardaninho,THE j
+@cglcoolman5260,Ok
+@hajongsongstideomkhajong7790,O rely love this hotel
+@chacharealsmooth9113,Yezzir
+@Redacted-ef5bn,Hi
+@MTGMAMING,please jimmy solved my problem
+@Vegatow,:0
+@DoggoParadise,❤❤
+@BushCampImperfectCell,Oh dang sorry bro you right.
+@theoeditz2399,Ye boy
+@the_red_doge,No
+@ChaoticTM,xddddd
+@lxxcidityy,ok
+@EbrimaYT,Ok
+@RTG-t4t,Я русский
+@striker_editz7146,Ok
+@ItzYanderGD,Yooo
+@sunky-,HIIII
+@xrce.8,Hi mrbeast
+@Munckefar,How did you know😭😭
+@headsdownharry,No
+@Dev_Neon,HIII
+@anabelleamy,no
+@BendigoBS,Hi
+@نسمةأمل-ث1ص,شكرا لك على اسعادي
+@cooolboy783,Fine
+@patriciadelgado2534,Jimmy lo necesito en español😪
+@tatsujee,😲
+@pumpkinpie1021,w
+@tiqsoo,Hi
+@luvlymari153,Yoo 2 mins ago
+@zeroxyzzz,Ok
+@2AMNumiofiicial,Hi
+@vspianist,ok
+@Vibe5114,:D
+@alejandramontezco1302,o
+@soyke5895,Hi Jimmy
+@Idontknow12237,I love you man
+@magdalenalipnicka3974,❤
+@TheNyanDoge,Ye
+@igor_ostrovski,YEAH LET S GO
+@SnakezMusic,Jimmy! :D
+@zacharychasteen4650,UWU
+@omaralturki9209,Okay
+@CommentGod54,You’re evil…
+@JustAk1d,You are the best youtuber
+@Sub2S1Lentfr,But why would I do that????
+@michaeljames9066,Let's gooo
+@Icey10201,Here before it blows up
+@doge11272,MR BEAST IS THE BEST
+@mariaconstanciadelacruzjua2691,Hola
+@Determined_6,d:
+@sarebanee,ok :(
+@lukas-dp7zy,Ok
+@Ilikewrestling201,No
+@PPGPlanet14,Hi
+@ThatGuyJimmy,Hi :)
+@gangstercat093,uwu
+@mileypetrich3489,Hello!!
+@NaeliC,Hi I love you
+@gangstercat093,Earlay
+@tolinnn_y,lmao u got me
+@dinkle._.berry3597,Ok mr beast I trust u
+@SomeNoobXD07,Ok
+@Sotsuma,Sheesh!
+@maiabrian,YOUR MY FAVORITE YOUTUBER! and i subbed :)
+@lareinard410,Hola
+@Jimmyrayop,Ooo
+@TitanTvMan165,Wait but is in spanish
+@leonmaloney999,$LHMBeats1
+@Trex_Xtreme69,Hi
+@marcusjasso7234,Mr beast how is brother Bobby
+@psshortfact7145,Hi
+@psshortfact7145,Please come to India
+@AbhiKumar-ti7ou,Hi sir I'm from nepal
+@iceicebabii1023,Hi Mr. Beast
+@LordOfTheChickinz,I need 52cents
+@dipakdas2169,Bist brother give me One bike
+@Feeqys,i just subscribe after 7 years ago
+@fredrodrigues2621,Mr Beast
+@nadie.cleo1379,Ey mrbest give a ps5 plis
+@Dvorovoi_Footbol,Russia
+@sajidalichiraagh5053,Hi
+@anthonymera4981,Hola
+@killersansdied1201,I need money I am literally in an appointment my mom has to work every day hard
+@kauegamerblack7584,Oi
+@azasydykov6870,please give me a car mr Beast
+@pascalastorgaalegria,Vitesse vs mejor youtuber del mundo mundial En qué país vives tu bebé chiquito cumpleaños en mi cumpleaños falta un mes
+@joaolucasxavierrios8654,Oi
+@aussie_baller1,Mr beast you're 💪  ceep going
+@pablodavid4800,I LOVE YOU MI MORSH
+@drastics4394,he knows.
+@bobbynewton9702,You are cool jimmy
