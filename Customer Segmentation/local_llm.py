@@ -1,5 +1,5 @@
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, BitsAndBytesConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from langchain_huggingface import HuggingFacePipeline, ChatHuggingFace
 
 # Global variable to cache the model to avoid reloading
@@ -8,7 +8,7 @@ _cached_model = None
 def load_local_chat_model(model_name="Qwen/Qwen2.5-7B-Instruct"):
     """
     Loads a local LLM and returns a LangChain ChatModel interface.
-    Uses 4-bit quantization for efficiency with CPU offloading support.
+    Uses 4-bit quantization for efficiency.
     """
     global _cached_model
     if _cached_model is not None:
@@ -19,20 +19,15 @@ def load_local_chat_model(model_name="Qwen/Qwen2.5-7B-Instruct"):
     try:
         tokenizer = AutoTokenizer.from_pretrained(model_name)
         
-        # Configure 4-bit quantization with CPU offloading support
-        quantization_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_compute_dtype=torch.float16,
-            bnb_4bit_quant_type="nf4",
-            llm_int8_enable_fp32_cpu_offload=True # Allow CPU offloading for layers that don't fit
-        )
-
-        # Load model with quantization config
+        # Load model with 4-bit quantization and CPU offload support
         model = AutoModelForCausalLM.from_pretrained(
             model_name,
             torch_dtype="auto",
             device_map="auto",
-            quantization_config=quantization_config,
+            load_in_4bit=True, 
+            bnb_4bit_compute_dtype=torch.float16,
+            bnb_4bit_quant_type="nf4",
+            llm_int8_enable_fp32_cpu_offload=True, # Enable CPU offloading
             trust_remote_code=True
         )
 
