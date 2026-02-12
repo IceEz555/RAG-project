@@ -1,0 +1,11 @@
+streamlit
+faster-whisper
+ollama
+transformers
+torch
+scipy
+sounddevice
+numpy
+streamlit-mic-recorder
+edge-tts
+nest_asyncio
